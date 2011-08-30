@@ -1,10 +1,11 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "data-munger/version"
+
+require "data_munger/version"
 
 Gem::Specification.new do |s|
-  s.name        = "data-munger"
-  s.version     = Data::Munger::VERSION
+  s.name        = "data_munger"
+  s.version     = DataMunger::VERSION
   s.authors     = ["Adam Davies"]
   s.email       = ["adam@36zeroes.com.au"]
   s.homepage    = ""
@@ -18,7 +19,7 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  # specify any dependencies here; for example:
-  # s.add_development_dependency "rspec"
-  # s.add_runtime_dependency "rest-client"
+
+  s.add_development_dependency 'rake', '~> 0.9'
+  s.add_development_dependency 'rspec', '~> 2.6'
 end
