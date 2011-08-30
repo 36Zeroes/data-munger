@@ -2,4 +2,5 @@
 .bundle
 Gemfile.lock
 pkg/*
-/nbproject/private/
+nbproject
+vendor
