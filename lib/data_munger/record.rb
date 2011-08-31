@@ -4,6 +4,9 @@
 # But it's still a hash, so those Hash methods will take priority (i.e. first, keys, ...)
 module DataMunger  
   class Record < Hashie::Mash
+    # A record can have sub-records (for grouping)
+    attr_accessor :sub_table
+
     # Have to wait for Hashie 2.0 (not released) for this:
     #    include ::Hashie::Extensions::MethodAccess
     def convert_key(key)  # don't stringify keys... why mr mash do this?
@@ -26,11 +29,20 @@ module DataMunger
       end      
     end
     
+    def group_sub_records!(*cols)
+      @sub_table.group_on!(*cols) if @sub_table && !@sub_table.blank?
+      self
+    end
+    
+    def slice(*keys)
+      new_rec = self.class.new
+      keys.each { |k| new_rec[k] = self[k] if has_key?(k) }
+      new_rec
+    end
+
     # Convert to a group, where in all non-grouped values are nullified
     def to_group(*keys)
-      g = GroupingRecord.new(self)
-      g.delete_if{|key, value| !keys.include?(key)}
-      g
+      Record.new(slice(*keys))
     end
     
     def set_values_at(keys, values)
@@ -40,10 +52,13 @@ module DataMunger
       end
       self
     end
-  end
-  
-  # A Grouping is a record which has a sub-listing of records
-  class GroupingRecord < Record
-    attr_accessor :records
+    
+    def inspect(level=0)
+      prefix = ("--" * (level))
+      key_values_inspection = map{|k,v| "#{k}: #{v}"}.join(',')
+      
+      "#{prefix}> Record {#{key_values_inspection}}>" +
+        ("#{"\n" + @sub_table.inspect(level + 1) if @sub_table}")
+    end    
   end
 end

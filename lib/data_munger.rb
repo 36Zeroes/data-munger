@@ -1,7 +1,7 @@
 require "data_munger/version"
 require 'hashie'
 
-require 'data_munger/record_set'
+require 'data_munger/table'
 require 'data_munger/record'
 
 module DataMunger

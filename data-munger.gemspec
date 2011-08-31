@@ -23,4 +23,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'rake', '~> 0.9'
   s.add_development_dependency 'rspec', '~> 2.6'
+  #s.add_development_dependency 'ruby-debug'  # for nice rspec output
+  s.add_development_dependency 'awesome_print'  # for nice rspec output
+  s.add_development_dependency 'fuubar'  # for nice rspec output
 end
