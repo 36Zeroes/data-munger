@@ -3,6 +3,7 @@ require 'hashie'
 
 require 'data_munger/table'
 require 'data_munger/record'
+require 'data_munger/aggregation'
 
 module DataMunger
   # Turn into an array...
